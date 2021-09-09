@@ -16,6 +16,8 @@ import {ref, defineAsyncComponent} from 'vue'
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
 
+import { useHead } from '@vueuse/head'
+
 const Prompt =  defineAsyncComponent(() =>
   import(/*webpackChunkName:"Prompt"*/ "@/components/atoms/Prompt.vue")
 );
@@ -26,6 +28,17 @@ export default {
     Prompt
   },
   setup() {
+
+          useHead({
+      // Can be static or computed
+      title: "Login",
+      meta: [
+        {
+          name: `description`,
+          content: "Login page for udemy vue app test"
+        },
+      ],
+    })
 
     const loginError = ref('')
     const router = useRouter(),
@@ -50,6 +63,11 @@ export default {
           loginError.value = "You need to register first as you don't seem to be registered"
         });
      
+
+
+
+
+
     }
     return {
       login,

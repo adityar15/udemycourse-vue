@@ -19,7 +19,7 @@
 
 <script>
 // @ is an alias to /src
-
+import {useHead} from '@vueuse/head'
 import axios from 'axios'
 import {defineAsyncComponent, ref} from 'vue'
 const Prompt =  defineAsyncComponent(() =>
@@ -51,6 +51,18 @@ export default {
     GoogleMaps
   },
   setup() {
+
+      useHead({
+      // Can be static or computed
+      title: "Find IP",
+      meta: [
+        {
+          name: `description`,
+          content: "Find ip address details"
+        },
+      ],
+    })
+
       const ip = ref('')
       const prompt = ref(''), type=ref(''), ipdetails=ref({})
       function searchIP()

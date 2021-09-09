@@ -11,6 +11,9 @@
 import { defineAsyncComponent, ref } from "vue";
 import Form from "@/components/organism/Form.vue";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
+import { useHead } from '@vueuse/head'
+
 const Prompt = defineAsyncComponent(() =>
   import(/*webpackChunkName:"Prompt"*/ "@/components/atoms/Prompt.vue")
 );
@@ -22,6 +25,19 @@ export default {
     Prompt,
   },
   setup() {
+
+        useHead({
+      // Can be static or computed
+      title: "Register",
+      meta: [
+        {
+          name: `description`,
+          content: "Login page for udemy vue app test"
+        },
+      ],
+    })
+
+
     const success = ref("");
     function register(user) {
       const auth = getAuth();
