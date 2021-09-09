@@ -1,30 +1,33 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+ <component :is="layout"></component>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import {ref, watch, defineAsyncComponent} from 'vue'
+import {useRoute} from 'vue-router'
 
-#nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+const Guest = defineAsyncComponent(()=>import(/*webpackChunkName: "guest"*/ '@/views/layouts/Guest.vue'))
+const Authenticated = defineAsyncComponent(()=>import(/*webpackChunkName: "Authenticated"*/ '@/views/layouts/Authenticated.vue'))
+export default {
+  components:{
+    Guest,
+    Authenticated
+  },
+  setup() {
+    const layout = ref('')
+    const route = useRoute()
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+    watch(route, (to)=>{
+      if(to.meta.layout)
+      {
+        layout.value = to.meta.layout
+      }
+    })
+
+    return{
+      layout
+    }
+  },
 }
-</style>
+</script>

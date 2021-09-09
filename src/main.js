@@ -1,7 +1,20 @@
-import { createApp } from 'vue'
+import { createApp, defineAsyncComponent } from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import './index.css'
 
-createApp(App).use(store).use(router).mount('#app')
+import { initializeApp } from "firebase/app";
+
+const Title = defineAsyncComponent(()=>import(/*webpackChunkName:"title"*/ '@/components/atoms/Title.vue'))
+initializeApp({
+    apiKey: "AIzaSyAN1kiXNbSPIi_lGu6z85hg4OvvfnFNM7M",
+    authDomain: "vue-course-c6ed3.firebaseapp.com",
+    projectId: "vue-course-c6ed3",
+    storageBucket: "vue-course-c6ed3.appspot.com",
+    messagingSenderId: "741597903366",
+    appId: "1:741597903366:web:082bf24a0e238074bea187"
+  });
+
+createApp(App).use(store).use(router).component('Title', Title).mount('#app')
