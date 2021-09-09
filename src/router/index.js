@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import {getAuth, onAuthStateChanged} from 'firebase/auth'
 
+import { defineAsyncComponent } from 'vue'
 
 const routes = [
   {
@@ -16,7 +17,7 @@ const routes = [
   {
     path: '/register',
     name: 'Register',
-    component: import(/*webpackChunkName:'register'*/ '@/views/Register.vue'),
+    component: defineAsyncComponent(()=>import(/*webpackChunkName:'register'*/ '@/views/Register.vue')),
     meta:{
       layout:"Guest"
     }
@@ -25,7 +26,7 @@ const routes = [
   {
     path: '/findip',
     name: 'findip',
-    component: import(/*webpackChunkName:'register'*/ '@/views/Findip.vue'),
+    component:defineAsyncComponent(() => import(/*webpackChunkName:'register'*/ '@/views/Findip.vue')), 
     meta:{
       layout:"Authenticated",
       loginRequired: true
@@ -54,6 +55,9 @@ router.beforeEach((to)=>{
           router.replace('/')
       }
     })
+  }
+  else{
+    console.log(to)
   }
 })
 
